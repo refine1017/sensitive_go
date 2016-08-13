@@ -35,6 +35,12 @@ func Test_isSensitiveFilterCharacter(t *testing.T) {
 	}
 }
 
+func TestInitSensitiveWords(t *testing.T) {
+	if e := InitSensitiveWords("no.txt"); e == nil {
+		t.Errorf("InitSensitiveWords no.txt, e == nil")
+	}
+}
+
 func Test_TransformSensitiveWords(t *testing.T) {
 	if TransformSensitiveWords("傻逼啊啊啊啊") != "**啊啊啊啊" {
 		t.Errorf("TransformSensitiveWords 傻逼啊啊啊啊 != **啊啊啊啊")
@@ -55,6 +61,14 @@ func Test_TransformSensitiveWords(t *testing.T) {
 	if TransformSensitiveWords("测试") != "测试" {
 		t.Errorf("CheckSensitiveWords 测试 != 测试")
 	}
+
+	if TransformSensitiveWords("") != "" {
+		t.Errorf("CheckSensitiveWords '' != ''")
+	}
+
+	if TransformSensitiveWords("傻  B") != "*  *" {
+		t.Errorf("TransformSensitiveWords 傻  B != *  *")
+	}
 }
 
 func Test_CheckSensitiveWords(t *testing.T) {
@@ -69,6 +83,10 @@ func Test_CheckSensitiveWords(t *testing.T) {
 
 	if CheckSensitiveWords("ml1，问题") == false {
 		t.Errorf("CheckSensitiveWords ml1，问题 = false")
+	}
+
+	if CheckSensitiveWords("傻  B") == false {
+		t.Errorf("CheckSensitiveWords 傻  B = false")
 	}
 
 	if CheckSensitiveWords("222") == true {
