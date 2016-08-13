@@ -43,9 +43,6 @@ func readSensitiveWords(filename string) (map[rune][][]rune, error) {
 		if isPrefix {
 		} else {
 			strs := strings.Split(line, "|")
-			if len(strs) <= 0 {
-				continue
-			}
 			str := strs[0]
 			if len(str) <= 0 {
 				continue
