@@ -44,12 +44,16 @@ func Test_TransformSensitiveWords(t *testing.T) {
 		t.Errorf("TransformSensitiveWords 碡 != *")
 	}
 
-	if TransformSensitiveWords("ml") != "**" {
-		t.Errorf("TransformSensitiveWords ml != **")
+	if TransformSensitiveWords("ml，问题") != "**，问题" {
+		t.Errorf("TransformSensitiveWords ml != **，问题")
 	}
 
 	if TransformSensitiveWords("12345") != "12345" {
 		t.Errorf("TransformSensitiveWords 12345 != 12345")
+	}
+
+	if TransformSensitiveWords("测试") != "测试" {
+		t.Errorf("CheckSensitiveWords 测试 != 测试")
 	}
 }
 
@@ -63,11 +67,19 @@ func Test_CheckSensitiveWords(t *testing.T) {
 		t.Errorf("CheckSensitiveWords 碡 = false")
 	}
 
-	if CheckSensitiveWords("ml1") == false {
-		t.Errorf("CheckSensitiveWords ml1 = false")
+	if CheckSensitiveWords("ml1，问题") == false {
+		t.Errorf("CheckSensitiveWords ml1，问题 = false")
 	}
 
 	if CheckSensitiveWords("222") == true {
 		t.Errorf("CheckSensitiveWords 222 = true")
+	}
+
+	if CheckSensitiveWords("测试") == true {
+		t.Errorf("CheckSensitiveWords 测试 = true")
+	}
+
+	if CheckSensitiveWords("") == true {
+		t.Errorf("CheckSensitiveWords '' = true")
 	}
 }
